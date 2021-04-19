@@ -11,9 +11,9 @@
 |
 */
 //use App\Image;
-
+/*
 Route::get('/', function () {
-    /*
+    
     $images = Image::all();
 
     foreach($images as $image){
@@ -34,9 +34,12 @@ Route::get('/', function () {
     
     }
 
-    die();*/
+    die();
     return view('welcome');
 });
+*/
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('/configuration', 'UserController@config')->name('config');
