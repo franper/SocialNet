@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -50,15 +51,19 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a href="" class="nav-link">Home</a>
+                                <a href="/" class="nav-link">Home</a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="" class="nav-link">Upload Image</a>
+                                <a href="{{ route('image.create') }}" class="nav-link">Upload Image</a>
                             </li> 
 
                             <li class="nav-item">
                                 <a href="" class="nav-link">Likes</a>
+                            </li>
+
+                            <li>
+                                @include('includes.avatar')
                             </li>
 
                             <li class="nav-item dropdown">
