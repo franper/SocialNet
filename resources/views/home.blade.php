@@ -45,7 +45,11 @@
                 </div>
             @endforeach
 
+            <!-- pagination -->
+            <div class="clearfix"></div>
+            {{ $images->links() }}
         </div>
     </div>
+
 </div>
 @endsection
