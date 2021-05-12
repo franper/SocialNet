@@ -57,5 +57,10 @@ class ImageController extends Controller
         return new Response($file, 200);
     }
 
+    public function detail($id){
+        $image = Image::find($id);
+        return view('image.detail', ['image' => $image]);
+    }
+
 
 }

@@ -6,17 +6,14 @@
         <div class="col-md-8">
             @include('includes.message')
 
-            @foreach ($images as $image)
                 <div class="card pub_image">
                     <div class="card-header">
                         <div class="container-avatar">
                             <img src="{{ route('user.avatar', ['filename'=>$image->user->image]) }}" alt="" class="avatar">
                         </div>
                         <div class="data-user">
-                            <a href="{{ route('image.detail', ['id' => $image->id]) }}">
-                                {{ $image->user->name.' '.$image->user->surname }}
-                                <span class="nick">{{ ' | @'.$image->user->nick }}</span>
-                            </a>
+                            {{ $image->user->name.' '.$image->user->surname }}
+                            <span class="nick">{{ ' | @'.$image->user->nick }}</span>
                         </div>
                         
                     </div>
@@ -66,11 +63,7 @@
                         
                     </div>
                 </div>
-            @endforeach
-
-            <!-- pagination -->
-            <div class="clearfix"></div>
-            {{ $images->links() }}
+          
         </div>
     </div>
 
