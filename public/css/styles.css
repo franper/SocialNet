@@ -76,3 +76,11 @@
 .likes a{
     margin-right: 15px;
 }
+
+.coment-format textarea, .coment-format button{
+    border: 0;
+    background-color: rgb(249, 251, 252);
+}
+.separador{
+    margin: 0px;
+}

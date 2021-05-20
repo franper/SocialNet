@@ -57,12 +57,30 @@
                         
                         <div class="description">
                             <p>
-                                <span class="nick">{{'@'.$image->user->nick }}</span> 
+                                <span class="nick">{{'@'.$image->user->nick }}</span>   
+
                                 {{ $image->description }}
                             </p>
+                           
+                            <span class="nick">{{ \FormatTime::LongTimeFilter($image->created_at) }}</span> 
+                           
                         </div>
 
                         <a href="" class="btn btn-light btn-comments">View all {{ count($image->comments) }} Comments</a>
+                        
+                        <hr class="separador">
+                        <div>
+                            <form action="" method="post" >
+                                @csrf
+                                <input type="hidden" name="image_id" value="{{ $image->id }}"> 
+                                <div class="input-group coment-format">
+                                    <textarea class="form-control" placeholder="Add a comment..." id="floatingTextarea"></textarea>
+                                    <button class="btn btn-outline-primary" type="button" id="inputGroupFileAddon04">Post</button>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        
                         
                     </div>
                 </div>
