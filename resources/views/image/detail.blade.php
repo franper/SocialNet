@@ -54,12 +54,54 @@
                         
                         <div class="description">
                             <p>
-                                <span class="nick">{{'@'.$image->user->nick }}</span> 
+                                <span class="nick">{{'@'.$image->user->nick }}</span>   
+
                                 {{ $image->description }}
                             </p>
+                           
+                            <span class="nick">{{ \FormatTime::LongTimeFilter($image->created_at) }}</span> 
+                           
                         </div>
+                        <hr class="separador">
+                        <p class="btn-comments">({{ count($image->comments) }}) Comments</p>
+                        
+                        @foreach ($image->comments as $comment)
+                            <div class="comment">
+                                <p>
+                                    <span class="nick">{{'@'.$comment->user->nick }}</span>   
 
-                        <a href="" class="btn btn-light btn-comments">View all {{ count($image->comments) }} Comments</a>
+                                    {{ $comment->content }}
+                                </p>
+                            
+                                <span class="nick">{{ \FormatTime::LongTimeFilter($comment->created_at) }}</span> 
+                                @if (Auth::check() && ($comment->user_id == Auth::user()->id || $comment->image->user_id == Auth::user()->id))
+                                    <a href="{{ route('comment.delete',['id' => $comment->id]) }}" class="btn btn-sm text-danger">Delete</a>
+                                @endif
+                                <br>
+                            
+                            </div> 
+                        @endforeach
+                        
+
+                        <hr class="separador">
+                        <div>
+                            <form action="{{ route('comment.save') }}" method="post" >
+                                @csrf
+                                <input type="hidden" name="image_id" value="{{ $image->id }}"> 
+                                <div class="input-group comment-format">
+                               
+                                    <textarea class="form-control {{ $errors->has('content')? 'is-invalid' : '' }}" placeholder="Add a comment..." name="content"></textarea>
+                                    
+                                    <button class="btn btn-outline-primary" type="submit" id="inputGroupFileAddon04">Post</button>
+                                    @if ($errors->has('content'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('content') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                
+                            </form>
+                        </div>
                         
                     </div>
                 </div>

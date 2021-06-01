@@ -66,16 +66,24 @@
                            
                         </div>
 
-                        <a href="" class="btn btn-light btn-comments">View all {{ count($image->comments) }} Comments</a>
+                        <a href="{{ route('image.detail', ['id' => $image->id]) }}" class="btn btn-light btn-comments">View all {{ count($image->comments) }} Comments</a>
                         
                         <hr class="separador">
                         <div>
-                            <form action="" method="post" >
+                            <form action="{{ route('comment.save') }}" method="post" >
                                 @csrf
                                 <input type="hidden" name="image_id" value="{{ $image->id }}"> 
                                 <div class="input-group coment-format">
-                                    <textarea class="form-control" placeholder="Add a comment..." id="floatingTextarea"></textarea>
-                                    <button class="btn btn-outline-primary" type="button" id="inputGroupFileAddon04">Post</button>
+                               
+                                    <textarea class="form-control {{ $errors->has('content')? 'is-invalid' : '' }}" placeholder="Add a comment..." name="content"></textarea>
+                                    
+                                    <button class="btn btn-outline-primary" type="submit" id="inputGroupFileAddon04">Post</button>
+                                    @if ($errors->has('content'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('content') }}</strong>
+                                        </span>
+                                    @endif
+                                    
                                 </div>
                                 
                             </form>
