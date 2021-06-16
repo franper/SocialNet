@@ -11,6 +11,16 @@ class LikeController extends Controller
         $this->middleware('auth');
     }
 
+    public function index(){
+        $user = \Auth::user();
+        $likes = like::where('user_id',$user->id)->orderBy('id','desc')
+                             ->paginate(3);
+
+        return view('like.index',[
+            'likes' => $likes
+        ]);
+    }
+
     public function like($image_id){
         //recoger datos del usuario logeado
         $user = \Auth::user();
@@ -27,7 +37,9 @@ class LikeController extends Controller
             //guardar en la base de datos
             $like->save();
             return response()->json([
-                'like' => $like
+                'like' => $like,
+                'message' => 'le has dado like'
+                
             ]);
         }else{
             return response()->json([

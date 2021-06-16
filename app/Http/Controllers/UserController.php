@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image as InterventionImage;
+use App\User;
 
 class UserController extends Controller
 {
@@ -51,8 +53,15 @@ class UserController extends Controller
             //poner un nombre unico a la imagen
             $image_path_name = time().$image_path->getClientOriginalName();
 
+            //ruta del storage con el nombre del fichero unico
+            $storagePath  = Storage::disk('users')->getDriver()->getAdapter()->getPathPrefix().$image_path_name;
+            //para redimensionar la imagen con 215 de ancho y 215 de alto
+            InterventionImage::make($image_path)
+                    ->resize(215,215)
+                    ->save($storagePath);
+
             //guardar en la carpeta storage (storage/app/users )
-            Storage::disk('users')->put($image_path_name, File::get($image_path));
+            //Storage::disk('users')->put($image_path_name, File::get($image_path));
 
             //le doy el valor al objeto usuario
             $user->image = $image_path_name;
@@ -68,5 +77,11 @@ class UserController extends Controller
     public function getImage($filename){
         $file = Storage::disk('users')->get($filename);
         return new Response($file, 200);
+    }
+
+    public function profile($id){
+        $user = User::find($id);
+
+        return view('user.profile',['user' => $user]);
     }
 }

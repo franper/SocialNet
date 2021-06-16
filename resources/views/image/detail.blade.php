@@ -3,17 +3,19 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-12 col-md-8">
             @include('includes.message')
 
-                <div class="card pub_image">
+                <div class="card pub_image shadow">
                     <div class="card-header">
                         <div class="container-avatar">
                             <img src="{{ route('user.avatar', ['filename'=>$image->user->image]) }}" alt="" class="avatar">
                         </div>
                         <div class="data-user">
-                            {{ $image->user->name.' '.$image->user->surname }}
-                            <span class="nick">{{ ' | @'.$image->user->nick }}</span>
+                            <a href="{{ route('user.profile', ['id' => $image->user->id]) }}">
+                                {{ $image->user->name.' '.$image->user->surname }}
+                                <span class="nick">{{ ' | @'.$image->user->nick }}</span>
+                            </a>
                         </div>
                         
                     </div>
@@ -31,26 +33,41 @@
 
                         <div class="likes">
                             
-                            <a href="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-heart text-secondary" viewBox="0 0 16 16">
-                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                  </svg>
-                            </a>
+                            <!-- Comprobar si el usuario dio like -->
+                            <?php $user_like = false; ?>
 
-                            <a href="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-chat text-secondary" viewBox="0 0 16 16">
-                                <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
-                                </svg>
-                            </a>
-                                
-                            <a href="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cursor text-secondary" viewBox="0 0 16 16">
-                                <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z"/>
-                                </svg>
-                            </a>
-                                
+                            @foreach ($image->likes as $like )
+                                @if ($like->user_id == Auth::user()->id)
+                                    <?php $user_like = true; ?>
+                                    
+                                @endif
+                            @endforeach
+                            @if ($user_like)
+                                <p class="btn btn-like" data-id="{{ $image->id }}">
+                                    <i class="fas fa-heart fa-2x"></i> {{ count($image->likes) }}
+                                </p>                               
+                            @else
+                                <p class="btn btn-dislike" data-id="{{ $image->id }}">
+                                    <i class="fal fa-heart fa-2x"></i> {{ count($image->likes) }}
+                                </p>
+                            @endif
+                            <p class="btn btn-comment">
+                                <i class="fal fa-comment-alt fa-2x"></i> {{ count($image->comments) }}
+                            </p>
 
+                            <p class="btn btn-send">
+                                <i class="fal fa-paper-plane fa-2x"></i>
+                            </p>
+                            
                         </div>
+                        
+                        <!-- solo muestra los botones si el usuario es dueño del post -->
+                        @if (Auth::user() && Auth::user()->id === $image->user_id)
+                            <div class="action">
+                                <a href="{{ route('image.edit',['id' => $image->id]) }}" class="btn btn-lg text-primary">Update</a>
+                                <a href="{{ route('image.delete',['id' => $image->id]) }}" class="btn btn-lg text-danger">Delete</a>
+                            </div>
+                        @endif
                         
                         <div class="description">
                             <p>
@@ -62,6 +79,7 @@
                             <span class="nick">{{ \FormatTime::LongTimeFilter($image->created_at) }}</span> 
                            
                         </div>
+
                         <hr class="separador">
                         <p class="btn-comments">({{ count($image->comments) }}) Comments</p>
                         
@@ -92,7 +110,7 @@
                                
                                     <textarea class="form-control {{ $errors->has('content')? 'is-invalid' : '' }}" placeholder="Add a comment..." name="content"></textarea>
                                     
-                                    <button class="btn btn-outline-primary" type="submit" id="inputGroupFileAddon04">Post</button>
+                                    <button class="btn btn-outline-primary btn-lg" type="submit" id="inputGroupFileAddon04">Post</button>
                                     @if ($errors->has('content'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('content') }}</strong>

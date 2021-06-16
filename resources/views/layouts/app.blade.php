@@ -17,6 +17,11 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
@@ -52,15 +57,29 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a href="/" class="nav-link">Home</a>
+                                <a href="/" class="nav-link">
+                                    <i class="fal fa-home-lg-alt"></i> Home
+                                </a>
+                                
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('image.create') }}" class="nav-link">Upload Image</a>
+                                <a href="{{ route('image.create') }}" class="nav-link">
+                                    <i class="fal fa-edit"></i> Start a Post
+                                </a>
                             </li> 
 
                             <li class="nav-item">
-                                <a href="" class="nav-link">Likes</a>
+                                <a href="" class="nav-link"> 
+                                    <i class="fal fa-bell"></i> Notifications
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('likes') }}" class="nav-link"> 
+                                    <i class="fal fa-heart"></i>Likes 
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">3 </span>
+                                </a>
                             </li>
 
                             <li>
@@ -74,7 +93,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                                    <a class="dropdown-item" href="">
+                                    <a class="dropdown-item" href="{{ route('user.profile',['id' => Auth::user()->id]) }}">
                                         My Profile
                                     </a>
 
