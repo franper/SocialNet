@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<main class="fondo">
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center centradoVertical">
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-header h4 text-center text-black-50">{{ __('Register') }}</div>
@@ -102,4 +103,5 @@
         </div>
     </div>
 </div>
+</main>
 @endsection

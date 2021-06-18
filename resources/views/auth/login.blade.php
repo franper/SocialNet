@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<main class="fondo">
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center centradoVertical">
         <div class="col-12 col-md-8">
             <div class="card shadow">
                 <div class="card-header h4 text-center text-black-50">{{ __('Login') }}</div>
@@ -70,4 +71,5 @@
         </div>
     </div>
 </div>
+</main>
 @endsection
