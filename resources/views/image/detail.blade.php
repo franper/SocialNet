@@ -10,7 +10,9 @@
                 <div class="card pub_image shadow">
                     <div class="card-header">
                         <div class="container-avatar">
+                        <?php if($image->user->image != null) {?>
                             <img src="{{ route('user.avatar', ['filename'=>$image->user->image]) }}" alt="" class="avatar">
+                        <?php }?>
                         </div>
                         <div class="data-user">
                             <a href="{{ route('user.profile', ['id' => $image->user->id]) }}">
