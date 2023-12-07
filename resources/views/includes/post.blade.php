@@ -25,51 +25,54 @@
             <img class="" src="{{ route('image.file',['filename' => $image->image_path  ]) }}" alt="" >
         </div>
 
-        <div class="likes">
-            
-            <!-- Comprobar si el usuario dió like -->
-            <?php $user_like = false; ?>
-
-            @foreach ($image->likes as $like )
-                @if ($like->user_id == Auth::user()->id)
-                    <?php $user_like = true; ?>
-                    
+        <div class="icons">
+            <div>
+                <!-- Comprobar si el usuario dió like -->
+                <?php $user_like = false; ?>
+    
+                @foreach ($image->likes as $like )
+                    @if ($like->user_id == Auth::user()->id)
+                        <?php $user_like = true; ?>
+                        
+                    @endif
+                @endforeach
+                @if ($user_like)
+                    <p class="btn btn-like" data-id="{{ $image->id }}">
+                        <i class="fas fa-heart fa-2x"></i> {{ count($image->likes) }}
+                    </p>                               
+                @else
+                    <p class="btn btn-dislike" data-id="{{ $image->id }}">
+                        <i class="fal fa-heart fa-2x"></i> {{ count($image->likes) }}
+                    </p>
                 @endif
-            @endforeach
-            @if ($user_like)
-                <p class="btn btn-like" data-id="{{ $image->id }}">
-                    <i class="fas fa-heart fa-2x"></i> {{ count($image->likes) }}
-                </p>                               
-            @else
-                <p class="btn btn-dislike" data-id="{{ $image->id }}">
-                    <i class="fal fa-heart fa-2x"></i> {{ count($image->likes) }}
+                <p class="btn">
+                    <a class="text-dark" href="{{ route('image.detail', ['id' => $image->id]) }}">  
+                        <i class="fal fa-comment-alt fa-2x"></i> {{ count($image->comments) }} 
+                    </a>
                 </p>
-            @endif
-            <p class="btn">
-                <a class="text-dark" href="{{ route('image.detail', ['id' => $image->id]) }}">  
-                    <i class="fal fa-comment-alt fa-2x"></i> {{ count($image->comments) }} 
-                </a>
-            </p>
+    
+                <p class="btn btn-send">
+                    <i class="fal fa-paper-plane fa-2x"></i>
+                </p>
+            </div>
 
-            <p class="btn btn-send">
-                <i class="fal fa-paper-plane fa-2x"></i>
-            </p>
+             <!-- solo muestra los botones si el usuario es dueño del post -->
+            <?php $uri = '/profile/'.$image->user_id ?>
+            
+            @if ($_SERVER['REQUEST_URI'] == $uri)
+                
+            
+                @if (Auth::user() && Auth::user()->id === $image->user_id)
+                    <div class="action">
+                        <a href="{{ route('image.edit',['id' => $image->id]) }}" class="btn btn-lg text-primary"><i class="fas fa-edit"></i> Edit</a>
+                        <a href="{{ route('image.delete',['id' => $image->id]) }}" class="btn btn-lg text-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                    </div>
+                @endif
+
+            @endif
             
         </div>
-        <!-- solo muestra los botones si el usuario es dueño del post -->
-        <?php $uri = '/profile/'.$image->user_id ?>
-        
-        @if ($_SERVER['REQUEST_URI'] == $uri)
-            
-        
-            @if (Auth::user() && Auth::user()->id === $image->user_id)
-                <div class="action">
-                    <a href="{{ route('image.edit',['id' => $image->id]) }}" class="btn btn-lg text-primary">Update</a>
-                    <a href="{{ route('image.delete',['id' => $image->id]) }}" class="btn btn-lg text-danger">Delete</a>
-                </div>
-            @endif
-
-        @endif
+       
         
         <div class="description">
             <p>

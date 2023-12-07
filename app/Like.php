@@ -16,4 +16,12 @@ class Like extends Model
     public function Image(){
         return $this->belongsTo('App\Image', 'image_id');
     }
+
+    //get total of likes
+    public function getTotalLike() {
+        $user = \Auth::user();
+        $likes = Like::where('user_id',$user->id)->orderBy('id','desc')->count();
+
+        return $likes;
+    }
 }

@@ -13,11 +13,11 @@ class LikeController extends Controller
 
     public function index(){
         $user = \Auth::user();
-        $likes = like::where('user_id',$user->id)->orderBy('id','desc')
+        $likes = Like::where('user_id',$user->id)->orderBy('id','desc')
                              ->paginate(3);
 
         return view('like.index',[
-            'likes' => $likes
+            'likes' => $likes,
         ]);
     }
 

@@ -1,29 +1,29 @@
-.fondo{
+.fondo {
     background-image: url('../img/fondo-min.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.logo{
+.logo {
     width: 200px;
 }
 
-.centradoVertical{
+.centradoVertical {
     align-items: center;
     height: 92vh;
 }
 
-.avatar{
+.avatar {
     margin-bottom: 15px;
     width: 55px;
 }
 
-.pub_image{
+.pub_image {
     margin-bottom: 20px;
 }
 
 .navbar .container-avatar,
-.pub_image .container-avatar{
+.pub_image .container-avatar {
     width: 30px;
     height: 30px;
     border-radius: 900px;
@@ -32,42 +32,44 @@
 }
 
 .navbar .container-avatar img,
-.pub_image .container-avatar img{
+.pub_image .container-avatar img {
     width: 100%;
 
-}  
-.pub_image .container-avatar{
+}
+
+.pub_image .container-avatar {
     float: left;
     margin-right: 15px;
 }
 
-.pub_image .data-user{
+.pub_image .data-user {
     font-weight: bold;
     line-height: 35px;
 
 }
 
-.pub_image .data-user a{
+.pub_image .data-user a {
     color: #444;
 
 }
 
-.pub_image .nick{
-    color: grey;
+.pub_image .nick {
+    color: black;
+    font-weight: bold;
 }
 
-.image-container{
+.image-container {
     width: 100%;
     max-height: 100%;
     overflow: hidden;
 }
 
-.image-container img{
+.image-container img {
     width: 100%;
     height: auto;
 }
 
-.pub_image .card-body{
+.pub_image .card-body {
     padding: 0px;
 }
 
@@ -77,27 +79,58 @@
     padding-top: 0px;
 }
 
-.comment{
-    padding: 5px; 
-    margin-left: 20px;   
+.comment {
+    padding: 5px;
+    margin-left: 20px;
 }
 
-.comment p{
-    margin: 0px;   
+.comment p {
+    margin: 0px;
 }
 
 
-.likes{
+.icons div,
+.icons .action {
     margin: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
+    display: inline-block;
+    /* Alinea los elementos verticalmente */
+    vertical-align: top;
+}
+
+.icons .action {
+    float: right;
 }
 
 
-.comment-format textarea, .comment-format button{
+.comment-format textarea,
+.comment-format button {
     border: 0;
     background-color: rgb(249, 251, 252);
 }
-.separador{
+
+.separador {
     margin: 0px;
+}
+
+/* estilo para el contador de likes */
+.nav-item {
+    position: relative;
+}
+
+.nav-item .balloon {
+    display: inline-block;
+    position: absolute;
+    top: -5px;
+    left: 20px;
+    color: aliceblue;
+    padding: 4px 8px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+.item-avatar,
+.dropdown {
+    margin-top: 8px;
 }

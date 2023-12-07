@@ -58,31 +58,37 @@
                         @else
                             <li class="nav-item">
                                 <a href="/" class="nav-link">
-                                    <i class="fal fa-home-lg-alt"></i> Home
+                                    <i class="fal fa-home-lg-alt fa-2x"></i> Home
                                 </a>
                                 
                             </li>
 
                             <li class="nav-item">
                                 <a href="{{ route('image.create') }}" class="nav-link">
-                                    <i class="fal fa-edit"></i> Start a Post
+                                    <i class="fal fa-plus-square fa-2x"></i> Start a Post
                                 </a>
                             </li> 
 
                             <li class="nav-item">
                                 <a href="" class="nav-link"> 
-                                    <i class="fal fa-bell"></i> Notifications
+                                    <i class="fal fa-bell fa-2x"></i>
+                                    <span class="balloon bg-danger">0</span> Notifications
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="{{ route('likes') }}" class="nav-link"> 
-                                    <i class="fal fa-heart"></i>Likes 
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">3 </span>
+                                    <i class="fal fa-heart fa-2x"></i>
+                                    <span class="balloon bg-danger">
+                                        @php
+                                            $like = new \App\Like();
+                                        @endphp
+                                        {{ $like->getTotalLike() ?? '' }}
+                                    </span> Likes
                                 </a>
                             </li>
 
-                            <li>
+                            <li class="item-avatar">
                                 @include('includes.avatar')
                             </li>
 
